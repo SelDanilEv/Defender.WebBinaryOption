@@ -49,7 +49,7 @@ export default {
     async startSimulation() {
 
       this.displayedRates = rates_data
-        .slice(this.currentIndex, this.currentIndex + this.ratesToDisplay);
+        .slice(this.currentIndex - this.ratesToDisplay, this.currentIndex);
 
       setInterval(async () => {
         if (this.currentIndex < rates_data.length - 1) {
