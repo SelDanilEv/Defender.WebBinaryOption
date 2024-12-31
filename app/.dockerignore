@@ -1,0 +1,35 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# Cache directories
+.cache
+dist
+
+# Editor files
+*.swp
+*.swo
+*.vim
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git files
+.git
+.gitignore
+
+# Build artifacts
+coverage/
