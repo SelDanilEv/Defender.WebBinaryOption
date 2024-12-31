@@ -76,6 +76,7 @@ export default {
       return {
         responsive: true,
         maintainAspectRatio: false,
+        animation: false,
         plugins: {
           legend: { display: false },
           tooltip: { enabled: false },
