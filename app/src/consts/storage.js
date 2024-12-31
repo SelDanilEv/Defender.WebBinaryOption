@@ -5,6 +5,8 @@ const c_storage = {
   BetsKey: "bets",
   BalanceKey: "balance",
   CurrentIndexKey: "currentIndex",
+  BetAmountKey: "betAmount",
+  TimeframeKey: "timeframe",
 };
 
 export default c_storage;

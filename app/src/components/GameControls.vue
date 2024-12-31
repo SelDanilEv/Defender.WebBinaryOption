@@ -6,7 +6,7 @@
       </div>
       <div>
         <label for="timeframe">Timeframe:</label>
-        <select id="timeframe" v-model="timeframe">
+        <select id="timeframe" v-model="timeframe" @change="saveTimeframe">
           <option value="10">10 seconds</option>
           <option value="30">30 seconds</option>
           <option value="60">1 minute</option>
@@ -15,7 +15,7 @@
       </div>
       <div>
         <label for="bet">Bet:</label>
-        <input type="number" id="bet" v-model="bet" min="1" step="0.01" @input="formatBet" />
+        <input type="number" id="bet" v-model="bet" min="1" step="0.01" @input="formatBet" @change="saveBet" />
       </div>
       <div class="buttons">
         <button class="call-button" @click="call" :disabled="balance < bet">Call</button>
@@ -26,8 +26,10 @@
 </template>
 
 <script>
+import { openDB } from 'idb';
 import c_bet from "@/consts/bet.js";
 import c_props from "@/consts/props.js";
+import c_storage from "@/consts/storage.js";
 
 export default {
   props: [c_props.Balance],
@@ -37,10 +39,34 @@ export default {
       bet: 10
     };
   },
+  async created() {
+    this.db = await openDB(c_storage.DBName, 1, {
+      upgrade(db) {
+        db.createObjectStore(c_storage.CollectionName, { keyPath: 'id' });
+      },
+    });
+
+    const savedTimeframe = await this.db.get(c_storage.CollectionName, c_storage.TimeframeKey);
+    const savedBet = await this.db.get(c_storage.CollectionName, c_storage.BetAmountKey);
+
+    if (savedTimeframe) {
+      this.timeframe = savedTimeframe.value;
+    }
+
+    if (savedBet) {
+      this.bet = savedBet.value;
+    }
+  },
   methods: {
     formatBet() {
       const value = +parseFloat(this.bet).toFixed(2).replace(/\.00$/, '');
       this.bet = isNaN(value) ? 0 : value;
+    },
+    async saveTimeframe() {
+      await this.db.put(c_storage.CollectionName, { id: c_storage.TimeframeKey, value: this.timeframe });
+    },
+    async saveBet() {
+      await this.db.put(c_storage.CollectionName, { id: c_storage.BetAmountKey, value: this.bet });
     },
     call() {
       this.$emit("action", { type: c_bet.CallType, timeframe: this.timeframe, bet: this.bet });
