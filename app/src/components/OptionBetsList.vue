@@ -6,7 +6,7 @@
                 <tr>
                     <th>Type</th>
                     <th>Amount</th>
-                    <th>Timeframe</th>
+                    <th ref="timeframeHeader">Timeframe</th>
                     <th>Rate</th>
                     <th>Result</th>
                 </tr>
@@ -32,6 +32,14 @@ import c_props from "@/consts/props.js";
 
 export default {
     props: [c_props.Bets, c_props.CurrentIndex],
+    mounted() {
+        if (window.innerWidth <= 600) {
+            this.$refs.timeframeHeader.textContent = "TF";
+        }
+        else {
+            this.$refs.timeframeHeader.textContent = "Timeframe";
+        }
+    }
 };
 </script>
 

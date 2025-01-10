@@ -1,21 +1,25 @@
 <template>
   <div class="controls-container">
     <div class="controls">
-      <div style="width: 150px;">
-        <label for="timeframe">Balance: {{ balance }}$</label>
-      </div>
-      <div>
-        <label for="timeframe">Timeframe:</label>
-        <select id="timeframe" v-model="timeframe" @change="saveTimeframe">
-          <option value="10">10 seconds</option>
-          <option value="30">30 seconds</option>
-          <option value="60">1 minute</option>
-          <option value="180">3 minutes</option>
-        </select>
-      </div>
-      <div>
-        <label for="bet">Bet:</label>
-        <input type="number" id="bet" v-model="bet" min="1" step="0.01" @input="formatBet" @change="saveBet" />
+      <div class="trade-controls">
+        <div class="balance">
+          <label for="timeframe">Balance: {{ balance }}$</label>
+        </div>
+        <div class="bet-controls">
+          <div>
+            <label for="timeframe">Timeframe:</label>
+            <select id="timeframe" v-model="timeframe" @change="saveTimeframe">
+              <option value="10">10 seconds</option>
+              <option value="30">30 seconds</option>
+              <option value="60">1 minute</option>
+              <option value="180">3 minutes</option>
+            </select>
+          </div>
+          <div>
+            <label for="bet">Bet:</label>
+            <input type="number" id="bet" v-model="bet" min="1" step="0.01" @input="formatBet" @change="saveBet" />
+          </div>
+        </div>
       </div>
       <div class="buttons">
         <button class="call-button" @click="call" :disabled="balance < bet">Call</button>
@@ -88,9 +92,31 @@ export default {
 .controls {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.bet-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.trade-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.balance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 label {
@@ -104,7 +130,8 @@ input {
   color: #ffffff;
   border: 1px solid #444444;
   border-radius: 4px;
-  padding: 5px;
+  padding: 3px;
+  max-width: 100px;
 }
 
 select:focus,
@@ -116,6 +143,8 @@ input:focus {
 .buttons {
   display: flex;
   gap: 10px;
+  width: 100%;
+  justify-content: center;
 }
 
 .call-button {
@@ -146,5 +175,23 @@ input:focus {
 
 .put-button:hover:not(:disabled) {
   background-color: darkred;
+}
+
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .buttons {
+    flex-direction: row;
+  }
+
+  .bet-controls {
+    gap: 1px;
+  }
+
+  .controls-container {
+    padding-top: 15px;
+  }
 }
 </style>

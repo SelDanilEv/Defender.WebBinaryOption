@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <header>
-      <h1>Binary Options Trading (2023 Real Data)</h1>
+      <h1>Binary Options Trading <br>
+        (2023 Real Data)</h1>
       <button class="reset-button" @click="resetBalance">Reset</button>
     </header>
     <main>
@@ -38,9 +39,12 @@ export default {
 }
 
 header {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
   background-color: #1e88e5;
   padding: 20px;
-  text-align: center;
   color: white;
   position: relative;
 }
@@ -48,18 +52,18 @@ header {
 header h1 {
   margin: 0;
   font-size: 1.8rem;
+  flex: 1 0 70%;
 }
 
 .reset-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  flex: 0 0 10%;
   background-color: #757575;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
   cursor: pointer;
+  text-align: center;
 }
 
 .reset-button:hover {
@@ -72,5 +76,23 @@ main {
   display: flex;
   justify-content: center;
   align-items: top;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .reset-button {
+    flex: 0 0 20%;
+  }
+
+  main {
+    padding: 0px;
+  }
 }
 </style>
